@@ -1,4 +1,4 @@
-export const champions = [
+const champions = [
 	'Urgot',
 	'Kayle',
 	'Sion',
@@ -172,3 +172,5 @@ export const champions = [
 	'Galio',
 	'Renata Glasc',
 ];
+
+export default champions.sort()
