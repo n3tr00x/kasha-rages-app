@@ -1,7 +1,13 @@
 import champions from './champions.js';
 
 const setPresentDay = () => {
-	document.querySelector('.input__field--date').valueAsDate = new Date();
+	const date = new Date();
+	const result = date.toLocaleDateString('af-ZA', {
+		year: 'numeric',
+		month: '2-digit',
+		day: '2-digit',
+	});
+	document.querySelector('.input__field--date').value = result;
 };
 
 const assignChampionsToDatalist = () => {
@@ -22,7 +28,7 @@ const dataHandler = () => {
 
 	return {
 		id: Date.now(),
-		date: date.valueAsDate.toISOString().slice(0, 10),
+		date: new Date(date.value).toISOString().slice(0, 10),
 		champion: champion.value,
 		description: description.value,
 	};
