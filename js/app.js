@@ -47,14 +47,26 @@ const submitData = async event => {
 		});
 	} catch (error) {
 		console.error(error.message);
+		const form = document.querySelector('.form-container');
+		const errorModal = document.querySelector('.error-container');
+		errorHandler({ element: form, className: 'error', time: 201 });
+		errorHandler({ element: errorModal, className: 'show', time: 1500});
 	}
 
 	resetInputs();
 };
 
+const errorHandler = error => {
+	const {element, className, time} = error;
+
+	element.classList.add(className);
+	setTimeout(() => {
+		element.classList.remove(className);
+	}, time);
+};
+
 const checkChampionValidity = value => {
 	if (champions.includes(value)) return true;
-
 	return false;
 };
 

@@ -1,105 +1,141 @@
 :root {
-    --main: #fff;
-    --background: #272ab0;
-    --form: rgb(156, 39, 129);
-    --input-focus: #572780;
-    --button: #60c68c;
-    --button-hover: rgb(22, 211, 104);
-    --button-border: rgb(11, 153, 73);
-    --shadow: 1px 1px 10px rgb(0, 0, 0);
+	--main: #fff;
+	--background: #272ab0;
+	--form: rgb(156, 39, 129);
+	--input-focus: #572780;
+	--button: #60c68c;
+	--button-hover: rgb(22, 211, 104);
+	--button-border: rgb(11, 153, 73);
+	--shadow: 1px 1px 10px rgb(0, 0, 0);
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: inherit;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: inherit;
 }
 
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    color: var(--main);
-    font-family: sans-serif;
-    background-color: var(--background);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	color: var(--main);
+	font-family: sans-serif;
+	background-color: var(--background);
 }
 
 .form-container {
-    width: 100%;
-    max-width: 420px;
-    margin: 0 16px;
-    padding: 32px;
-    border-radius: 8px;
-    background-color: var(--form);
-    box-shadow: var(--shadow);
+	width: 100%;
+	max-width: 420px;
+	margin: 0 16px;
+	padding: 32px;
+	border-radius: 8px;
+	background-color: var(--form);
+	box-shadow: var(--shadow);
+}
+
+.form-container.error {
+	animation: errorAnimation 0.2s;
 }
 
 .header {
-    padding: 8px;
+	padding: 8px;
 }
 
 .header h1 {
-    font-size: 24px;
-    text-align: center;
+	font-size: 24px;
+	text-align: center;
 }
 
 .input {
-    margin: 5px 0;
+	margin: 5px 0;
 }
 
 .input__field {
-    width: 100%;
-    min-height: 25px;
-    padding: 6px 12px;
-    border: none;
-    border: 2px solid transparent;
-    transition: background-color .3s;
-    outline: none;
+	width: 100%;
+	min-height: 25px;
+	padding: 6px 12px;
+	border: none;
+	border: 2px solid transparent;
+	transition: background-color 0.3s;
+	outline: none;
 }
 
 .input__field:focus {
-    background-color: #ddd;
-    border: 2px solid var(--input-focus);
+	background-color: #ddd;
+	border: 2px solid var(--input-focus);
 }
 
 textarea {
-    max-width: 100%;
-    min-width: 100%;
-    height: 50px;
-    max-height: 100px;
+	max-width: 100%;
+	min-width: 100%;
+	height: 50px;
+	max-height: 100px;
 }
 
 label {
-    display: block;
+	display: block;
 }
 
 .submit-btn {
-    width: 100%;
-    padding: 12px 24px;
-    background-color: var(--button);
-    color: inherit;
-    border: 2px solid transparent;
-    border-radius: 6px;
-    transition: background-color .3s, border .3s;
-    outline: none;
-    cursor: pointer;
+	width: 100%;
+	padding: 12px 24px;
+	background-color: var(--button);
+	color: inherit;
+	border: 2px solid transparent;
+	border-radius: 6px;
+	transition: background-color 0.3s, border 0.3s;
+	outline: none;
+	cursor: pointer;
 }
 
 .submit-btn:focus,
 .submit-btn:hover {
-    border: 2px solid var(--button-border);
+	border: 2px solid var(--button-border);
 }
 
 .submit-btn:hover {
-    background-color: var(--button-hover);
+	background-color: var(--button-hover);
+}
+
+.error-container {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 300px;
+    padding: 48px;
+    transform: translate(-50%, -100%);
+    background-color: var(--form);
+    transition: transform .1s;
+}
+
+.error-container.show {
+    top: 15px;
+    transform: translate(-50%, 0);
 }
 
 @media (min-width: 540px) {
-    .form-container {
-        margin: 0 auto;
-    }
+	.form-container {
+		margin: 0;
+	}
 }
 
-
+@keyframes errorAnimation {
+	20% {
+		transform: translateX(10px);
+	}
+	40% {
+		transform: translateX(-10px);
+	}
+	60% {
+		transform: translateX(10px);
+	}
+	80% {
+		transform: translateX(-10px);
+	}
+	100% {
+		transform: translateX(10px);
+	}
+}
