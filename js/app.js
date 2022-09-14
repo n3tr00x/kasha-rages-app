@@ -23,8 +23,23 @@ const dataHandler = () => {
 	const champion = document.querySelector('.input__field--champion');
 	const description = document.querySelector('.input__field--desc');
 
-	if (!checkChampionValidity(champion.value))
-		throw new Error('Wprowadzono błędną postać!');
+	let errorsState = {};
+
+	if (!checkChampionValidity(champion.value)) {
+		errorsState = {
+			...errorsState,
+			championError: 'Wpisz poprawną nazwę postaci!',
+		};
+	}
+
+	if (!description.value) {
+		errorsState = {
+			...errorsState,
+			descError: 'Wpisz opis inwektywy',
+		};
+	}
+
+	if (Object.keys(errorsState).length) throw errorsState;
 
 	return {
 		id: Date.now(),
@@ -37,6 +52,9 @@ const dataHandler = () => {
 const submitData = async event => {
 	event.preventDefault();
 
+	const form = document.querySelector('.form-container');
+	const errorModal = document.querySelector('.error-container');
+
 	try {
 		await fetch('https://sheetdb.io/api/v1/uprq1nzevlt46', {
 			method: 'post',
@@ -45,24 +63,44 @@ const submitData = async event => {
 			},
 			body: JSON.stringify(dataHandler()),
 		});
+		modalHandler({ text: 'Pomyślnie przesłano formularz!' });
 	} catch (error) {
-		console.error(error.message);
-		const form = document.querySelector('.form-container');
-		const errorModal = document.querySelector('.error-container');
-		errorHandler({ element: form, className: 'error', time: 201 });
-		errorHandler({ element: errorModal, className: 'show', time: 1500});
+		console.error(error);
+
+		formErrorHandler();
+		modalHandler(error);
 	}
 
 	resetInputs();
 };
 
-const errorHandler = error => {
-	const {element, className, time} = error;
+const formErrorHandler = () => {
+	const form = document.querySelector('.form-container');
 
-	element.classList.add(className);
+	form.classList.add('error');
 	setTimeout(() => {
-		element.classList.remove(className);
-	}, time);
+		form.classList.remove('error');
+	}, 201);
+};
+
+const modalHandler = error => {
+	const modal = document.querySelector('.modal');
+
+	modal.classList.add('show');
+
+	for (const value of Object.values(error)) {
+		const p = document.createElement('p');
+		p.classList.add('modal__message');
+		p.textContent = value;
+		modal.appendChild(p);
+	}
+
+	const messages = document.getElementsByClassName('modal__message');
+
+	setTimeout(() => {
+		modal.classList.remove('show');
+		Array.from(messages).forEach(child => child.remove());
+	}, 1500);
 };
 
 const checkChampionValidity = value => {

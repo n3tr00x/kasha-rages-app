@@ -100,7 +100,7 @@ label {
 	background-color: var(--button-hover);
 }
 
-.error-container {
+.modal {
     position: absolute;
     top: 0;
     left: 50%;
@@ -111,7 +111,7 @@ label {
     transition: transform .1s;
 }
 
-.error-container.show {
+.modal.show {
     top: 15px;
     transform: translate(-50%, 0);
 }
