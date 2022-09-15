@@ -80,7 +80,6 @@ const champions = [
 	'Lillia',
 	"Bel'Veth",
 	'Annie',
-	'Galio',
 	'Twisted Fate',
 	'LeBlanc',
 	'Vladimir',

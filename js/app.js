@@ -52,9 +52,6 @@ const dataHandler = () => {
 const submitData = async event => {
 	event.preventDefault();
 
-	const form = document.querySelector('.form-container');
-	const errorModal = document.querySelector('.error-container');
-
 	try {
 		await fetch('https://sheetdb.io/api/v1/uprq1nzevlt46', {
 			method: 'post',
@@ -84,6 +81,8 @@ const formErrorHandler = () => {
 };
 
 const modalHandler = error => {
+	document.querySelector('.submit-btn').setAttribute('disabled', 'disabled');
+
 	const modal = document.querySelector('.modal');
 
 	modal.classList.add('show');
@@ -100,6 +99,7 @@ const modalHandler = error => {
 	setTimeout(() => {
 		modal.classList.remove('show');
 		Array.from(messages).forEach(child => child.remove());
+		document.querySelector('.submit-btn').removeAttribute('disabled');
 	}, 1500);
 };
 
