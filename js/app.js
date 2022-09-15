@@ -60,12 +60,10 @@ const submitData = async event => {
 			},
 			body: JSON.stringify(dataHandler()),
 		});
-		modalHandler({ text: 'Pomyślnie przesłano formularz!' });
+		modalHandler({ text: 'Pomyślnie przesłano formularz!' }, true);
 	} catch (error) {
-		console.error(error);
-
 		formErrorHandler();
-		modalHandler(error);
+		modalHandler(error, false);
 	}
 
 	resetInputs();
@@ -80,14 +78,14 @@ const formErrorHandler = () => {
 	}, 201);
 };
 
-const modalHandler = error => {
+const modalHandler = (info, type) => {
+	const modal = document.querySelector('.modal');
+	type ? type = 'accept' : type = 'error';
+	modal.classList.add('show', type);
+
 	document.querySelector('.submit-btn').setAttribute('disabled', 'disabled');
 
-	const modal = document.querySelector('.modal');
-
-	modal.classList.add('show');
-
-	for (const value of Object.values(error)) {
+	for (const value of Object.values(info)) {
 		const p = document.createElement('p');
 		p.classList.add('modal__message');
 		p.textContent = value;
@@ -97,7 +95,7 @@ const modalHandler = error => {
 	const messages = document.getElementsByClassName('modal__message');
 
 	setTimeout(() => {
-		modal.classList.remove('show');
+		modal.classList.remove('show', type);
 		Array.from(messages).forEach(child => child.remove());
 		document.querySelector('.submit-btn').removeAttribute('disabled');
 	}, 1500);

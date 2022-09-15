@@ -1,12 +1,14 @@
 :root {
-	--main: #fff;
-	--background: #272ab0;
+	--main: rgb(255, 255, 255);
+	--background: rgb(39, 42, 176);
 	--form: rgb(156, 39, 129);
-	--input-focus: #572780;
-	--button: #60c68c;
+	--input-focus: rgb(87, 39, 128);
+	--button: rgb(96, 198, 140);
 	--button-hover: rgb(22, 211, 104);
 	--button-border: rgb(11, 153, 73);
 	--shadow: 1px 1px 10px rgb(0, 0, 0);
+	--error: rgb(179, 0, 33);
+	--accept: rgb(3, 218, 198);
 }
 
 * {
@@ -105,11 +107,20 @@ label {
     position: absolute;
     top: 0;
     left: 50%;
-    width: 300px;
-    padding: 48px;
+	width: 75%;
+	max-width: 360px;
+    padding: 24px;
+	border-radius: 8px;
     transform: translate(-50%, -100%);
-    background-color: var(--form);
     transition: transform .1s;
+}
+
+.modal.error {
+	background-color: var(--error);
+}
+
+.modal.accept {
+	background-color: var(--accept);
 }
 
 .modal.show {
@@ -117,9 +128,18 @@ label {
     transform: translate(-50%, 0);
 }
 
+.modal__message {
+	font-size: 14px;
+	text-align: center;
+}
+
 @media (min-width: 540px) {
 	.form-container {
 		margin: 0;
+	}
+
+	.modal__message {
+		font-size: 16px;
 	}
 }
 
