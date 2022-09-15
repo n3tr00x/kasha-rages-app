@@ -22,7 +22,7 @@ body {
 	align-items: center;
 	height: 100vh;
 	color: var(--main);
-	font-family: sans-serif;
+	font-family: 'Inter', sans-serif;
 	background-color: var(--background);
 }
 
@@ -84,6 +84,7 @@ label {
 	padding: 12px 24px;
 	background-color: var(--button);
 	color: inherit;
+	font-size: 18px;
 	border: 2px solid transparent;
 	border-radius: 6px;
 	transition: background-color 0.3s, border 0.3s;
