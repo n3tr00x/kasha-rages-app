@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="module" src="./js/app.js" defer></script>
     <link rel="stylesheet" href="./css/style.css">
 </head>
@@ -16,36 +17,45 @@
 <body>
 
     <div class="modal"></div>
+    <nav class="nav">
+        <span>Wykres</span>
+    </nav>
 
-    <div class="form-container">
-        <header class="header">
-            <h1>Kasha Rages App</h1>
-        </header>
-        <main>
-            <form class="form">
-                <div class="row">
-                    <div class="input">
-                        <label for="date">Data</label>
-                        <input type="date" id="date" class="input__field input__field--date" />
+    <div class="form-wrapper">
+        <div class="form-container">
+            <header class="header">
+                <h1>Kasha Rages App</h1>
+            </header>
+            <main>
+                <form class="form">
+                    <div class="row">
+                        <div class="input">
+                            <label for="date">Data</label>
+                            <input type="date" id="date" class="input__field input__field--date" />
+                        </div>
+                        <div class="input">
+                            <label for="champion">Postać</label>
+                            <input list="champions" id="champion" placeholder="Wybierz postać"
+                                class="input__field input__field--champion" />
+                            <datalist id="champions"></datalist>
+                        </div>
                     </div>
-                    <div class="input">
-                        <label for="champion">Postać</label>
-                        <input list="champions" id="champion" placeholder="Wybierz postać"
-                            class="input__field input__field--champion" />
-                        <datalist id="champions"></datalist>
+                    <div class="row">
+                        <div class="input">
+                            <label for="description">Inwektywa</label>
+                            <textarea id="description" class="input__field input__field--desc"
+                                placeholder="Krótki opis inwektywy..."></textarea>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="input">
-                        <label for="description">Inwektywa</label>
-                        <textarea id="description" class="input__field input__field--desc"
-                            placeholder="Krótki opis inwektywy..."></textarea>
-                    </div>
-                </div>
-                <button type="submit" class="submit-btn">Wyślij</button>
-            </form>
-        </main>
+                    <button type="submit" class="submit-btn">Wyślij</button>
+                </form>
+            </main>
+        </div>
+    
     </div>
+
+    
+    <div class="canvas-container"></div>
 
 </body>
 

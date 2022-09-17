@@ -1,4 +1,5 @@
 import champions from './champions.js';
+// import { Chart } from '../node_modules/chart.js';
 
 const setPresentDay = () => {
 	const date = new Date();
@@ -49,6 +50,24 @@ const dataHandler = () => {
 	};
 };
 
+const getChampionCount = async () => {
+	try {
+		const response = await fetch('https://sheetdb.io/api/v1/uprq1nzevlt46');
+		const data = await response.json();
+		const championsCount = {};
+
+		data.forEach(row => {
+			championsCount[row.champion] = (championsCount[row.champion] || 0) + 1;
+		});
+
+		console.log(championsCount);
+
+		return championsCount;
+	} catch (error) {
+		console.error(error);
+	}
+};
+
 const submitData = async event => {
 	event.preventDefault();
 
@@ -61,6 +80,7 @@ const submitData = async event => {
 			body: JSON.stringify(dataHandler()),
 		});
 		modalHandler({ text: 'Pomyślnie przesłano formularz!' }, true);
+		chartHandler();
 	} catch (error) {
 		formErrorHandler();
 		modalHandler(error, false);
@@ -80,7 +100,7 @@ const formErrorHandler = () => {
 
 const modalHandler = (info, type) => {
 	const modal = document.querySelector('.modal');
-	type ? type = 'accept' : type = 'error';
+	type ? (type = 'accept') : (type = 'error');
 	modal.classList.add('show', type);
 
 	document.querySelector('.submit-btn').setAttribute('disabled', 'disabled');
@@ -111,10 +131,58 @@ const resetInputs = () => {
 	setPresentDay();
 };
 
-const init = () => {
+const generateChart = () => {
+	const canvas = document.createElement('canvas');
+	canvas.classList.add('chart');
+	document.querySelector('.form-container').appendChild(canvas);
+
+	return canvas;
+};
+
+const chartHandler = async () => {
+	if (document.querySelector('.chart') !== null)
+		document.querySelector('.chart').remove();
+
+	const canvas = generateChart();
+
+	new Chart(canvas, {
+		type: 'pie',
+		responsive: true,
+		data: {
+			labels: Object.keys(await getChampionCount()),
+			datasets: [
+				{
+					label: 'Population (millions)',
+					backgroundColor: ['#3e95cd', '#8e5ea2'],
+					data: Object.values(await getChampionCount()),
+				},
+			],
+		},
+		options: {
+			plugins: {
+				legend: {
+					labels: {
+						color: '#fff',
+					},
+				},
+				title: {
+					display: 'true',
+					text: 'Postacie',
+					color: '#fff',
+				},
+			},
+		},
+	});
+};
+
+const init = async () => {
 	setPresentDay();
 	assignChampionsToDatalist();
+	// chartHandler();
 	document.querySelector('.submit-btn').addEventListener('click', submitData);
+	document.querySelector('.nav').addEventListener('click', () => {
+		document.querySelector('.form-wrapper').classList.add('slide-left');
+	});
 };
 
 init();
