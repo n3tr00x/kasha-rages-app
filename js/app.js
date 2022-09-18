@@ -1,5 +1,4 @@
 import champions from './champions.js';
-// import { Chart } from '../node_modules/chart.js';
 
 const setPresentDay = () => {
 	const date = new Date();
@@ -52,11 +51,13 @@ const dataHandler = () => {
 
 const getChampionCount = async () => {
 	try {
-		const response = await fetch('https://sheetdb.io/api/v1/uprq1nzevlt46');
+		const response = await fetch('https://kasha-rages-db-default-rtdb.firebaseio.com/rages.json');
 		const data = await response.json();
+		
+		const championsCountArr = Object.values(data);
 		const championsCount = {};
 
-		data.forEach(row => {
+		championsCountArr.forEach(row => {
 			championsCount[row.champion] = (championsCount[row.champion] || 0) + 1;
 		});
 
@@ -72,10 +73,11 @@ const submitData = async event => {
 	event.preventDefault();
 
 	try {
-		await fetch('https://sheetdb.io/api/v1/uprq1nzevlt46', {
+		await fetch('https://kasha-rages-db-default-rtdb.firebaseio.com/rages.json', {
 			method: 'post',
 			headers: {
 				'Content-Type': 'application/json',
+				'Accept': 'application/json',
 			},
 			body: JSON.stringify(dataHandler()),
 		});
@@ -134,7 +136,7 @@ const resetInputs = () => {
 const generateChart = () => {
 	const canvas = document.createElement('canvas');
 	canvas.classList.add('chart');
-	document.querySelector('.form-container').appendChild(canvas);
+	document.querySelector('.canvas-container').appendChild(canvas);
 
 	return canvas;
 };
@@ -147,18 +149,17 @@ const chartHandler = async () => {
 
 	new Chart(canvas, {
 		type: 'pie',
-		responsive: true,
 		data: {
 			labels: Object.keys(await getChampionCount()),
 			datasets: [
 				{
-					label: 'Population (millions)',
 					backgroundColor: ['#3e95cd', '#8e5ea2'],
 					data: Object.values(await getChampionCount()),
 				},
 			],
 		},
 		options: {
+			responsive: true,
 			plugins: {
 				legend: {
 					labels: {
@@ -169,6 +170,7 @@ const chartHandler = async () => {
 					display: 'true',
 					text: 'Postacie',
 					color: '#fff',
+					size: 40
 				},
 			},
 		},
@@ -178,10 +180,12 @@ const chartHandler = async () => {
 const init = async () => {
 	setPresentDay();
 	assignChampionsToDatalist();
-	// chartHandler();
+	chartHandler();
 	document.querySelector('.submit-btn').addEventListener('click', submitData);
 	document.querySelector('.nav').addEventListener('click', () => {
-		document.querySelector('.form-wrapper').classList.add('slide-left');
+		document
+			.querySelectorAll('.test')
+			.forEach(page => page.classList.toggle('slide-left'));
 	});
 };
 
