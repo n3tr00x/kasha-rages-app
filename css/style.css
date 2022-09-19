@@ -46,7 +46,6 @@ body {
 	top: 50%;
 	left: 50%;
 	width: 90%;
-	max-width: 420px;
 	transition: transform 0.3s;
 }
 
@@ -68,10 +67,12 @@ body {
 }
 
 .form-container {
+	max-width: 420px;
+	margin: 0 auto;
 	padding: 32px;
-	border-radius: 8px;
 	background-color: var(--form);
 	box-shadow: var(--shadow);
+	border-radius: 8px;
 }
 
 .form-container.error {
@@ -170,7 +171,7 @@ label {
 }
 
 @media (min-width: 540px) {
-	.form-container {
+	.side {
 		width: 100%;
 	}
 

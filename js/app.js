@@ -51,9 +51,11 @@ const dataHandler = () => {
 
 const getChampionCount = async () => {
 	try {
-		const response = await fetch('https://kasha-rages-db-default-rtdb.firebaseio.com/rages.json');
+		const response = await fetch(
+			'https://kasha-rages-db-default-rtdb.firebaseio.com/rages.json'
+		);
 		const data = await response.json();
-		
+
 		const championsCountArr = Object.values(data);
 		const championsCount = {};
 
@@ -73,14 +75,17 @@ const submitData = async event => {
 	event.preventDefault();
 
 	try {
-		await fetch('https://kasha-rages-db-default-rtdb.firebaseio.com/rages.json', {
-			method: 'post',
-			headers: {
-				'Content-Type': 'application/json',
-				'Accept': 'application/json',
-			},
-			body: JSON.stringify(dataHandler()),
-		});
+		await fetch(
+			'https://kasha-rages-db-default-rtdb.firebaseio.com/rages.json',
+			{
+				method: 'post',
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json',
+				},
+				body: JSON.stringify(dataHandler()),
+			}
+		);
 		modalHandler({ text: 'Pomyślnie przesłano formularz!' }, true);
 		chartHandler();
 	} catch (error) {
@@ -136,7 +141,7 @@ const resetInputs = () => {
 const generateChart = () => {
 	const canvas = document.createElement('canvas');
 	canvas.classList.add('chart');
-	document.querySelector('.canvas-container').appendChild(canvas);
+	document.querySelector('.chart-container').appendChild(canvas);
 
 	return canvas;
 };
@@ -153,7 +158,13 @@ const chartHandler = async () => {
 			labels: Object.keys(await getChampionCount()),
 			datasets: [
 				{
-					backgroundColor: ['#3e95cd', '#8e5ea2'],
+					backgroundColor: [
+						'#003f5c',
+						'#58508d',
+						'#bc5090',
+						'#ff6361',
+						'#ffa600',
+					],
 					data: Object.values(await getChampionCount()),
 				},
 			],
@@ -164,13 +175,20 @@ const chartHandler = async () => {
 				legend: {
 					labels: {
 						color: '#fff',
+						font: {
+							size: 14,
+							family: "'Inter', sans-serif",
+						},
 					},
 				},
 				title: {
 					display: 'true',
 					text: 'Postacie',
 					color: '#fff',
-					size: 40
+					font: {
+						size: 24,
+						family: "'Inter', sans-serif",
+					},
 				},
 			},
 		},
@@ -183,7 +201,9 @@ const init = async () => {
 	chartHandler();
 	document.querySelector('.submit-btn').addEventListener('click', submitData);
 	document.querySelector('.nav').addEventListener('click', () => {
-		document.querySelectorAll('.side').forEach(side => side.classList.toggle('slide-left'))
+		document
+			.querySelectorAll('.side')
+			.forEach(side => side.classList.toggle('slide-left'));
 	});
 };
 
