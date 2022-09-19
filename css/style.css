@@ -29,37 +29,45 @@ body {
 .nav {
 	position: fixed;
 	top: 0;
-	right: 50%;
+	right: 0;
 	padding: 15px;
 	z-index: 99;
 	cursor: pointer;
 }
 
 .container {
-	display: flex;
-	width: 200%;
-	height: 100%;
+	position: relative;
+	height: inherit;
+	overflow: hidden;
 }
 
-.form-wrapper,
-.canvas-wrapper {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-	width: 100%;
+.side {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 90%;
+	max-width: 420px;
 	transition: transform 0.3s;
 }
 
+.side--form {
+	transform: translate(-50%, -50%);
+}
 
-.form-wrapper.slide-left,
-.canvas-wrapper.slide-left {
-	transform: translateX(-100%);
+.side--chart {
+	max-width: 640px;
+	transform: translate(150%, -50%);
+}
+
+.side--form.slide-left {
+	transform: translate(-250%, -50%);
+}
+
+.side--chart.slide-left {
+	transform: translate(-50%, -50%)
 }
 
 .form-container {
-	width: 90%;
-	max-width: 420px;
 	padding: 32px;
 	border-radius: 8px;
 	background-color: var(--form);
@@ -68,10 +76,6 @@ body {
 
 .form-container.error {
 	animation: errorAnimation 0.2s;
-}
-
-.canvas-container {
-	max-width: 520px;
 }
 
 .header {

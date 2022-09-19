@@ -183,9 +183,7 @@ const init = async () => {
 	chartHandler();
 	document.querySelector('.submit-btn').addEventListener('click', submitData);
 	document.querySelector('.nav').addEventListener('click', () => {
-		document
-			.querySelectorAll('.test')
-			.forEach(page => page.classList.toggle('slide-left'));
+		document.querySelectorAll('.side').forEach(side => side.classList.toggle('slide-left'))
 	});
 };
 
