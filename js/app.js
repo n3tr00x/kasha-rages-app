@@ -55,7 +55,8 @@ const getChampionCount = async () => {
 			'https://kasha-rages-db-default-rtdb.firebaseio.com/rages.json'
 		);
 		const data = await response.json();
-
+		if(data === null) throw 'Brak danych';
+		
 		const championsCountArr = Object.values(data);
 		const championsCount = {};
 
